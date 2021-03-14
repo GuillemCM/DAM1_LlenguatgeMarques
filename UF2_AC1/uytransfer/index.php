@@ -3,7 +3,7 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
@@ -14,17 +14,10 @@
     <script src="https://kit.fontawesome.com/ef14336b18.js" crossorigin="anonymous"></script>
   </head>
   <body>
-    <div class="container p-3 bg-secondary mt-1" style="border-style: solid;">
-        <div class="row align-items-center">
-            <div class="col-8">
-                <h3 class="text-start">Uy!Transfer</h3>
-            </div>
-            <div class="col-4 text-center">
-                <p class="pt-1"><a style="color: black;" href="">Enviar archivo</a> | <a style="color: black;" href="">Mis últimos archivos</a></p> 
-            </div>
-        </div>
-    </div>
-
+    
+    <?php
+        include "librerias/header.php";
+    ?>
     <div class="container">
         <div class="row">
             <div class="offset-2 col-8 justify-content-center align-items-center mt-4">
@@ -33,7 +26,7 @@
                     <input type="text" class="form-control" id="nameInput" placeholder="Tu nombre">
                   </div>
                   <div class="m-3">
-                    <input class="form-control" type="file" id="formFile">
+                    <input class="form-control" type="file" id="formFile" name="archivo">
                   </div>
                   <div class="m-3 form-check form-check-inline">
                       <input class="form-check-input" type="checkbox" value="" id="enviarPorEmail">
@@ -49,7 +42,7 @@
                       <textarea class="form-control rounded-0" id="mensajeEmail" rows="5"></textarea>
                   </div>
                   <div class="m-3 float-right">
-                      <button type="button" class="btn btn-light" style="border-color: black">Subir archivo</button>
+                      <button type="submit" class="btn btn-light" style="border-color: black">Subir archivo</button>
                   </div>
                 </form>
             </div>
