@@ -19,10 +19,15 @@
         include "librerias/header.php";
     ?>
     <div class="container">
-        <div class="row">
-            <div class="offset-2 col-8 justify-content-center align-items-center mt-4">
-              
-            </div>
+        <div class="row mt-5 justify-content-center">
+          <div class="col-3 offset-2">
+            <img src="images/archivoBien.png" class="img-fluid" alt="ArchivoSubidoConExito">
+          </div>
+          <div class="col-7 text-center">
+            <h2>Archivo enviado correctamente</h2>
+            <h4 class="mt-4 mb-5">Hola Manolo, usa éste link para compartir tu archivo</h4>
+            <a href="" class="mt-5">http://localhost/uyTransfer/files/2021031112345</a>
+          </div>
         </div>
     </div>
 
