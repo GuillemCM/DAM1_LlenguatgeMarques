@@ -20,14 +20,70 @@
     ?>
     <div class="container">
         <div class="row mt-5 justify-content-center">
-          <div class="col-3 offset-2">
-            <img src="images/archivoBien.png" class="img-fluid" alt="ArchivoSubidoConExito">
-          </div>
-          <div class="col-7 text-center">
-            <h2>Archivo enviado correctamente</h2>
-            <h4 class="mt-4 mb-5">Hola Manolo, usa éste link para compartir tu archivo</h4>
-            <a href="" class="mt-5">http://localhost/uyTransfer/files/2021031112345</a>
-          </div>
+          <?php
+            if ($_SERVER["REQUEST_METHOD"] == "GET") 
+            {
+              $dades = $_GET;
+            } else {
+              $dades = $_POST;
+            }
+            
+            if (!empty($_FILES)) {
+              $nomArxiu = $_FILES["formFile"]["name"];
+              $extensio = substr($nomArxiu, strpos($nomArxiu, "."));
+              $tamanoArchivo = $_FILES["formFile"]["size"];
+              $rutaTmp = $_FILES["formFile"]["tmp_name"];
+              $data = getdate();
+              $any = strval($data["year"]);
+              $mes = strval($data["mon"]);
+              $dia = strval($data["mday"]);
+              if ($mes < 10) {
+                $mes = "0$mes";
+              }
+              $numRand = strval(rand(11111, 99999));
+              $nomArxiu = ($any.$mes.$dia.$numRand.$extensio);
+              move_uploaded_file($rutaTmp, "./files/$nomArxiu");
+
+              echo "<div class=\"col-3 offset-2\">
+                    <img src=\"images/archivoBien.png\" class=\"img-fluid\" alt=\"ArchivoSubidoConExito\">
+                  </div>";
+              echo "<div class=\"col-7 text-center\">";
+              echo "<h2>Archivo enviado correctamente</h2>";
+            }
+            else if(empty($_FILES))
+            {
+              echo "Hola No hay archivo";
+              echo "<div class=\"col-3 offset-2\">
+                    <img src=\"archivoFail.png\" class=\"img-fluid\" alt=\"ArchivoNoSubidoConExito\">
+                  </div>";
+              echo "<div class=\"col-7 text-center\">";
+              echo "<h2>El archivo no se ha enviado correctamente</h2>";
+            }
+            foreach ($dades as $clau => $valor) 
+            {
+              $valorNet = trim($valor);
+              if ($clau == "nameInput")
+              {
+                if ($valorNet != "") {
+                  echo "<h4 class=\"mt-4 mb-5\">Hola $valorNet, usa éste link para compartir tu archivo</h4>";
+                }
+                else
+                {
+                  echo "<h4 class=\"mt-4 mb-5\">Oye tu!! Usa éste link para compartir tu archivo</h4>";
+                } 
+              }
+
+              if ($clau == "formFile")
+              {
+                echo "Hola?";
+                $nomArxiu = $valorNet;
+                echo $nomArxiu;
+              }
+            }
+              echo"<a href=\"\" class=\"mt-5\">http://localhost/uyTransfer/files/$nomArxiu</a>";
+            echo "</div>";
+          ?>
+          
         </div>
     </div>
 

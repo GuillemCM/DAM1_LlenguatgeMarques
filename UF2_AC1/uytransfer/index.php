@@ -23,23 +23,24 @@
             <div class="offset-2 col-8 justify-content-center align-items-center mt-4">
                 <form name="file" action="upload.php" method="post" enctype="multipart/form-data">
                   <div class="m-3">
-                    <input type="text" class="form-control" id="nameInput" placeholder="Tu nombre">
+                    <input type="text" class="form-control" name= "nameInput" id="nameInput" placeholder="Tu nombre">
                   </div>
                   <div class="m-3">
-                    <input class="form-control" type="file" id="formFile" name="archivo">
+                    <input type="hidden" name="MAX_FILE_SIZE" value="10485760">
+                    <input class="form-control" type="file" id="formFile" name="formFile">
                   </div>
                   <div class="m-3 form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" value="" id="enviarPorEmail">
+                      <input class="form-check-input" type="checkbox" value="enviar" id="enviarPorEmail" name="enviarPorEmail">
                       <label class="form-check-label" for="enviarPorEmail">
                         Quiero enviar el link de descarga por email
                       </label>
                   </div>
                   <div class="m-3">
-                      <input type="email" class="form-control" id="emailAEnviar" aria-describedby="email" placeholder="Email del destinatario">
+                      <input type="email" class="form-control" id="emailAEnviar" aria-describedby="email" placeholder="Email del destinatario" name="emailAEnviar">
                   </div>
                   <div class="m-3">
                       <label>Mensaje</label>
-                      <textarea class="form-control rounded-0" id="mensajeEmail" rows="5"></textarea>
+                      <textarea class="form-control rounded-0" id="mensajeEmail" name="mensajeEmail" rows="5"></textarea>
                   </div>
                   <div class="m-3 float-right">
                       <button type="submit" class="btn btn-light" style="border-color: black">Subir archivo</button>
