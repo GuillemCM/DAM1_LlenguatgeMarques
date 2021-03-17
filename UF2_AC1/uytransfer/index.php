@@ -26,7 +26,6 @@
                     <input type="text" class="form-control" name= "nameInput" id="nameInput" placeholder="Tu nombre">
                   </div>
                   <div class="m-3">
-                    <input type="hidden" name="MAX_FILE_SIZE" value="10485760">
                     <input class="form-control" type="file" id="formFile" name="formFile">
                   </div>
                   <div class="m-3 form-check form-check-inline">

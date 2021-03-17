@@ -42,45 +42,49 @@
               }
               $numRand = strval(rand(11111, 99999));
               $nomArxiu = ($any.$mes.$dia.$numRand.$extensio);
-              move_uploaded_file($rutaTmp, "./files/$nomArxiu");
-
-              echo "<div class=\"col-3 offset-2\">
-                    <img src=\"images/archivoBien.png\" class=\"img-fluid\" alt=\"ArchivoSubidoConExito\">
-                  </div>";
-              echo "<div class=\"col-7 text-center\">";
-              echo "<h2>Archivo enviado correctamente</h2>";
-            }
-            else
-            {
-              echo "Hola No hay archivo";
-              echo "<div class=\"col-3 offset-2\">
-                    <img src=\"images/archivoFail.png\" class=\"img-fluid\" alt=\"ArchivoNoSubidoConExito\">
-                  </div>";
-              echo "<div class=\"col-7 text-center\">";
-              echo "<h2>El archivo no se ha enviado correctamente</h2>";
-            }
-            foreach ($dades as $clau => $valor) 
-            {
-              $valorNet = trim($valor);
-              if ($clau == "nameInput")
+              if(($extensio == ".png" || $extensio == ".pdf" || $extensio == ".jpg" || $extensio == ".rar" || $extensio == ".zip") 
+                && $tamanoArchivo <= 10485760)
               {
-                if ($valorNet != "") {
-                  echo "<h4 class=\"mt-4 mb-5\">Hola $valorNet, usa éste link para compartir tu archivo</h4>";
-                }
-                else
+                  echo "<div class=\"col-3 offset-2\">
+                      <img src=\"images/archivoBien.png\" class=\"img-fluid\" alt=\"ArchivoSubidoConExito\">
+                    </div>";
+                echo "<div class=\"col-7 text-center\">";
+                echo "<h2>Archivo enviado correctamente</h2>";
+                foreach ($dades as $clau => $valor) 
                 {
-                  echo "<h4 class=\"mt-4 mb-5\">Oye tu!! Usa éste link para compartir tu archivo</h4>";
-                } 
+                  $valorNet = trim($valor);
+                  if ($clau == "nameInput")
+                  {
+                    if ($valorNet != "") {
+                      echo "<h4 class=\"mt-4 mb-5\">Hola $valorNet, usa éste link para compartir tu archivo</h4>";
+                    }
+                    else
+                    {
+                      echo "<h4 class=\"mt-4 mb-5\">Oye tu!! Usa éste link para compartir tu archivo</h4>";
+                    } 
+                  }
+                }
+                echo"<a href=\"\" class=\"mt-5\">http://localhost/uytransfer/files/$nomArxiu</a>";
+                move_uploaded_file($rutaTmp, "./files/$nomArxiu");
               }
-
-              if ($clau == "formFile")
+              else
               {
-                echo "Hola?";
-                $nomArxiu = $valorNet;
-                echo $nomArxiu;
-              }
+                echo "<div class=\"col-3 offset-2\">
+                      <img src=\"images/archivoFail.png\" class=\"img-fluid\" alt=\"ArchivoNoSubidoConExito\">
+                    </div>";
+                echo "<div class=\"col-7 text-center\">";
+                echo "<h2>El archivo no se ha enviado correctamente</h2>";
+                if($tamanoArchivo > 10485760)
+                {
+                  echo "<h3>Tu archivo supera el tamaño permitido de 10 MB</h3>";
+                }
+                else if($extensio != ".png" && $extensio != ".pdf" && $extensio != ".jpg" && $extensio != ".rar" && $extensio != ".zip")
+                {
+                  echo "<h3>La extensión de tu archivo no cumple con los siguientes formatos: </h3>";
+                  echo "<h5> '.png'; '.pdf'; '.jpg'; '.rar'; o '.zip' </h5>";
+                }
+              } 
             }
-              echo"<a href=\"\" class=\"mt-5\">http://localhost/uytransfer/files/$nomArxiu</a>";
             echo "</div>";
           ?>
           
