@@ -50,11 +50,11 @@
               echo "<div class=\"col-7 text-center\">";
               echo "<h2>Archivo enviado correctamente</h2>";
             }
-            else if(empty($_FILES))
+            else
             {
               echo "Hola No hay archivo";
               echo "<div class=\"col-3 offset-2\">
-                    <img src=\"archivoFail.png\" class=\"img-fluid\" alt=\"ArchivoNoSubidoConExito\">
+                    <img src=\"images/archivoFail.png\" class=\"img-fluid\" alt=\"ArchivoNoSubidoConExito\">
                   </div>";
               echo "<div class=\"col-7 text-center\">";
               echo "<h2>El archivo no se ha enviado correctamente</h2>";
@@ -80,7 +80,7 @@
                 echo $nomArxiu;
               }
             }
-              echo"<a href=\"\" class=\"mt-5\">http://localhost/uyTransfer/files/$nomArxiu</a>";
+              echo"<a href=\"\" class=\"mt-5\">http://localhost/uytransfer/files/$nomArxiu</a>";
             echo "</div>";
           ?>
           
