@@ -50,20 +50,58 @@
                     </div>";
                 echo "<div class=\"col-7 text-center\">";
                 echo "<h2>Archivo enviado correctamente</h2>";
-                foreach ($dades as $clau => $valor) 
+
+                //Variable para el checkbox
+                $checked = false;
+                //Variable booleana para saber si el mail es valido
+                $mailValido = false;
+                //Recogemos variables del POST
+                $nomUser = trim($_POST["nameInput"]);
+                if (isset($_POST["enviarPorEmail"])) 
                 {
-                  $valorNet = trim($valor);
-                  if ($clau == "nameInput")
-                  {
-                    if ($valorNet != "") {
-                      echo "<h4 class=\"mt-4 mb-5\">Hola $valorNet, usa éste link para compartir tu archivo</h4>";
-                    }
-                    else
-                    {
-                      echo "<h4 class=\"mt-4 mb-5\">Oye tu!! Usa éste link para compartir tu archivo</h4>";
-                    } 
+                  $checked = true;
+                }
+                //$checked = trim($_POST["enviarPorEmail"]);
+                $emaillUser = trim($_POST["emailAEnviar"]);
+                $textoEmail = trim($_POST["mensajeEmail"]);
+
+                //Si hay nombre, se le llama por el mismo
+                if ($nomUser != "") {
+                  echo "<h4 class=\"mt-4 mb-5\">Hola $nomUser, usa éste link para compartir tu archivo</h4>";
+                }
+                //Si no hay nombre, frase genérica
+                else
+                {
+                  echo "<h4 class=\"mt-4 mb-5\">Oye tu!! Usa éste link para compartir tu archivo</h4>";
+                } 
+
+                //Comprovaciones de si es un mail correcto
+                if(preg_match('/@/', $emaillUser))
+                {
+                  //Cumple con el pattern, se puede enviar
+                  $mailValido = true;
+                }
+                else
+                {
+                  header("Location: index.php?error_mail=1");
+                }
+
+                //Mensaje del textArea
+                if ($textoEmail == "")
+                {
+                  $textoEmail = "Sorpresa!! Alguien ha compartido contigo un archivo.";
+                }
+
+                //Checkbox
+                if ($checked) 
+                {
+                  //Si mail valido, enviar mail
+                  if($mailValido == 1)
+                  { 
+                    mail($emaillUser, "UY!TRASNFER", $textoEmail);
                   }
                 }
+                
                 echo"<a href=\"\" class=\"mt-5\">http://localhost/uytransfer/files/$nomArxiu</a>";
                 move_uploaded_file($rutaTmp, "./files/$nomArxiu");
               }

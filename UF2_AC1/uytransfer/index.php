@@ -29,12 +29,20 @@
                     <input class="form-control" type="file" id="formFile" name="formFile">
                   </div>
                   <div class="m-3 form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" value="enviar" id="enviarPorEmail" name="enviarPorEmail">
+                      <input class="form-check-input" type="checkbox" value="1" id="enviarPorEmail" name="enviarPorEmail">
                       <label class="form-check-label" for="enviarPorEmail">
                         Quiero enviar el link de descarga por email
                       </label>
                   </div>
                   <div class="m-3">
+                      <?php
+                        if (isset($_GET["error_mail"]))
+                        {
+                         echo "<label class=\"form-check-label mb-2 text-danger\" style=\"border: 1px dotted yellow; border-radius: 5px;\" for=\"emailAEnviar\">
+                                Email incorrecto
+                              </label>";
+                        }
+                      ?>
                       <input type="email" class="form-control" id="emailAEnviar" aria-describedby="email" placeholder="Email del destinatario" name="emailAEnviar">
                   </div>
                   <div class="m-3">
