@@ -40,7 +40,7 @@
               if ($mes < 10) {
                 $mes = "0$mes";
               }
-              $numRand = strval(rand(11111, 99999));
+              $numRand = strval(rand(10000, 99999));
               $nomArxiu = ($any.$mes.$dia.$numRand.$extensio);
               if(($extensio == ".png" || $extensio == ".pdf" || $extensio == ".jpg" || $extensio == ".rar" || $extensio == ".zip") 
                 && $tamanoArchivo <= 10485760)
@@ -101,9 +101,17 @@
                     mail($emaillUser, "UY!TRASNFER", $textoEmail);
                   }
                 }
+
+                //Url que se genera para la descarga
+                $urlDescarga = "http://localhost/uytransfer/files/$nomArxiu";
+                $cookie;
                 
-                echo"<a href=\"\" class=\"mt-5\">http://localhost/uytransfer/files/$nomArxiu</a>";
+                echo"<a href=\"\" class=\"mt-5\">$urlDescarga</a>";
+                //Movem fitxer de temporal a files
                 move_uploaded_file($rutaTmp, "./files/$nomArxiu");
+                //Guardem cookie
+                
+                setcookie($cookie, $urlDescarga, time()+(60*60*24*7));
               }
               else
               {
