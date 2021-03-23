@@ -20,8 +20,18 @@
     ?>
     <div class="container">
         <div class="row">
-            <div class="offset-2 col-8 justify-content-center align-items-center mt-4">
+            <div class="offset-2 col-8 offset-2 justify-content-center align-items-center mt-4">
                 <h1 class="mt-4 mb-5">Archivos enviados recientemente</h1>
+                <?php
+                //Si existe cookie
+                if (isset($_COOKIE["contador"])) 
+                {
+                    foreach ($_COOKIE["contador"] as $cookie => $valor) 
+                    {
+                        echo "<p>$cookie: $valor </p>";
+                    }
+                }  
+                ?>
             </div>
         </div>
     </div>

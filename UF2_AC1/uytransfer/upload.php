@@ -55,6 +55,7 @@
                 $checked = false;
                 //Variable booleana para saber si el mail es valido
                 $mailValido = false;
+
                 //Recogemos variables del POST
                 $nomUser = trim($_POST["nameInput"]);
                 if (isset($_POST["enviarPorEmail"])) 
@@ -75,14 +76,17 @@
                   echo "<h4 class=\"mt-4 mb-5\">Oye tu!! Usa éste link para compartir tu archivo</h4>";
                 } 
 
+                //Variable para no  ir enviando el archivo al directorio varias veces
+                $errorMail = false;
                 //Comprovaciones de si es un mail correcto
                 if(preg_match('/@/', $emaillUser))
                 {
                   //Cumple con el pattern, se puede enviar
                   $mailValido = true;
                 }
-                else
+                elseif ($mailValido == false && $checked)
                 {
+                  $errorMail = true;
                   header("Location: index.php?error_mail=1");
                 }
 
@@ -107,11 +111,29 @@
                 $cookie;
                 
                 echo"<a href=\"\" class=\"mt-5\">$urlDescarga</a>";
-                //Movem fitxer de temporal a files
-                move_uploaded_file($rutaTmp, "./files/$nomArxiu");
+                //Movem fitxer de temporal a files, si no s'ha prodït un error pel email
+                if (!$errorMail) 
+                {
+                  move_uploaded_file($rutaTmp, "./files/$nomArxiu");
+                }
+               
                 //Guardem cookie
-                
-                setcookie($cookie, $urlDescarga, time()+(60*60*24*7));
+                $numCookies = 0;
+                $contador = 0;
+                if(isset($_COOKIE[$contador]))
+                {
+                  echo "Existe";
+                  //strval, es queixa
+                  $numCookies = $_COOKIE[$contador]+1;
+                }
+                else
+                {
+                  echo "No existe";
+                  $_COOKIE[$contador] = 1;
+                  $numCookies = 1;
+                  print_r($_COOKIE[$contador]);
+                }
+                setcookie(($contador+$numCookies), $urlDescarga, time()+(60*60*24*7));
               }
               else
               {
