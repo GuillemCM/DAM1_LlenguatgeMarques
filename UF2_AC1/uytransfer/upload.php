@@ -107,9 +107,9 @@
                 }
 
                 //Url que se genera para la descarga
-                $urlDescarga = "http://localhost/uytransfer/files/$nomArxiu";
+                $urlDescarga = "http://localhost/DAM1_LlenguatgeMarques/UF2_AC1/uytransfer/files/$nomArxiu";
                 
-                echo"<a href=\"\" class=\"mt-5\">$urlDescarga</a>";
+                echo"<a href=\"http://localhost/DAM1_LlenguatgeMarques/UF2_AC1/uytransfer/files/$nomArxiu\" class=\"mt-5\">$urlDescarga</a>";
                 //Movem fitxer de temporal a files, si no s'ha prodït un error pel email
                 if (!$errorMail) 
                 {
