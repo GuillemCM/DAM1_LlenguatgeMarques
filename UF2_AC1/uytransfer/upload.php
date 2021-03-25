@@ -108,7 +108,6 @@
 
                 //Url que se genera para la descarga
                 $urlDescarga = "http://localhost/uytransfer/files/$nomArxiu";
-                $cookie;
                 
                 echo"<a href=\"\" class=\"mt-5\">$urlDescarga</a>";
                 //Movem fitxer de temporal a files, si no s'ha prodït un error pel email
@@ -118,22 +117,14 @@
                 }
                
                 //Guardem cookie
-                $numCookies = 0;
-                $contador = 0;
-                if(isset($_COOKIE[$contador]))
-                {
-                  echo "Existe";
-                  //strval, es queixa
-                  $numCookies = $_COOKIE[$contador]+1;
+                $numCookies = 1;
+                if(isset($_COOKIE["numCookies"]))
+                { 
+                  $numCookies = $_COOKIE["numCookies"];
+                  $numCookies++;
                 }
-                else
-                {
-                  echo "No existe";
-                  $_COOKIE[$contador] = 1;
-                  $numCookies = 1;
-                  print_r($_COOKIE[$contador]);
-                }
-                setcookie(($contador+$numCookies), $urlDescarga, time()+(60*60*24*7));
+                setcookie("numCookies", $numCookies, time()+(60*60*24*1000));
+                setcookie("link$numCookies", $urlDescarga, time()+(60*60*24*7));
               }
               else
               {

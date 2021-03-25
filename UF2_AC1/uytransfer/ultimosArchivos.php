@@ -21,16 +21,20 @@
     <div class="container">
         <div class="row">
             <div class="offset-2 col-8 offset-2 justify-content-center align-items-center mt-4">
-                <h1 class="mt-4 mb-5">Archivos enviados recientemente</h1>
+                <h1 class="mt-4 mb-5" style="text-align: center;">Archivos enviados recientemente</h1>
                 <?php
-                //Si existe cookie
-                if (isset($_COOKIE["contador"])) 
-                {
-                    foreach ($_COOKIE["contador"] as $cookie => $valor) 
+                    //Si existe cookie
+                    if (isset($_COOKIE["numCookies"])) 
                     {
-                        echo "<p>$cookie: $valor </p>";
-                    }
-                }  
+                        $numCookies = $_COOKIE["numCookies"];
+
+                        while (isset($_COOKIE["link$numCookies"])) 
+                        {
+                            $url = $_COOKIE["link$numCookies"];
+                            echo "<p style=\"text-align: center;\"><a href=\"$url\">$url</a></p>";
+                            $numCookies--;
+                        }
+                    }  
                 ?>
             </div>
         </div>
