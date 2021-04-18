@@ -1,8 +1,9 @@
 <?php
 	require "header.php";
+	require "config.php";
 ?>
 		<div class="container m-5 mx-auto text-white">
-			<form action=<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?> method="post" enctype="multipart/form-data">
+			<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data">
 				<div class="row">
 					<div class="col-4 offset-2">
 						<div class="form-group">
@@ -17,7 +18,32 @@
 							<label for="categoria">Categoria:</label>
 							<select class="form-control" name="categoria" id="categoria">
 								<option value="">Selecciona una opció</option>
-								<option value="1">Arròs</option>
+								<?php
+									//
+									$sql = "SELECT id_categoria, nom FROM categories ORDER BY nom";
+									//
+									$result = $conn->query($sql);
+
+									if ($result) 
+									{
+										if ($result->num_rows > 0) 
+										{
+											$row = $result->fetch_assoc();
+											while($row) 
+											{
+												$id_cat = $row["id_categoria"];
+												$nom = $row["nom"];
+
+												echo "<option value=\"$id_cat\">$nom</option>";
+												$row = $result->fetch_assoc();
+											}
+										}
+										else
+										{
+											//No s'han trobat categories
+										}
+									}
+								?>
 							</select>
 						</div>
 						<div class="form-group">

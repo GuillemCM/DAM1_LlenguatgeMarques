@@ -11,6 +11,9 @@
 		<script src="js/bootstrap.js"></script>
 	</head>
 	<body class="bg-primary">
+		<?php 
+			require "config.php"; 
+		?>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<a class="navbar-brand" href="index.php">
 				 <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="logo">
@@ -55,7 +58,40 @@
 						</div>
 					</li>
 				</ul>
-				<a href="entrar.php" class="btn btn-primary my-0 mx-2">Entrar</a>
-				<a href="form_client.php" class="btn btn-outline-primary my-0">Nou client</a>
+				<?php
+					session_start();
+					if (!empty($_SESSION)) 
+					{
+						$id_user = $_SESSION["user"];
+
+						$sql = "SELECT nom, cognoms FROM clients WHERE id_client = $id_user";
+						$result = $conn->query($sql);
+						if($result)
+						{
+							if ($result->num_rows > 0)
+							{
+								//
+								$row = $result->fetch_assoc();
+								$nomUsuari = $row["nom"];
+								$cognomsUsuari = $row["cognoms"];
+
+								echo "<a href=\"entrar.php\" class=\"btn btn-primary my-0 mx-2\">$nomUsuari $cognomsUsuari </a>
+										<a href=\"tancar.php\" class=\"btn btn-outline-primary my-0\">Tancar</a>";
+							}
+							else
+							{
+								//No s'ha trobat el client amb aquest id
+								echo "<p>Hi ha hagut un error</p>";
+							}
+						}
+					}
+					else
+					{
+						//Si no hi ha sessió, es mostra normal
+						echo "<a href=\"entrar.php\" class=\"btn btn-primary my-0 mx-2\">Entrar</a>
+							<a href=\"form_client.php\" class=\"btn btn-outline-primary my-0\">Nou client</a>";
+					}
+					$conn->close();
+				?>
 			</div>
 		</nav>
