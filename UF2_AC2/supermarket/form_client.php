@@ -24,7 +24,7 @@
 			&& esEmail($mail) == 1) {
 
 			$sql = "INSERT INTO clients (nom_usuari, contrasenya, nom, cognoms, nif, adreca, codi_postal, poblacio, telefon, email) 
-			VALUES ('$username', '$pass', '$nombre', '$apellidos', '$nif', '$direccion', '$codigo_postal', '$poblacion', '$telefono', '&mail')";
+			VALUES ('$username', '$pass', '$nombre', '$apellidos', '$nif', '$direccion', '$codigo_postal', '$poblacion', '$telefono', '$mail')";
 			$valid = true;
 		}
 		elseif (nomUsuariValid($username) == 1 && (seguretatContrasenya($pass) > 2) && $rp_pass == $pass && !empty($nombre) && !empty($apellidos)
