@@ -1,9 +1,36 @@
 <?php
 	require "header.php";
-	require "config.php"
+	require "config.php";
+
+	if(!empty($_POST))
+	{
+		//
+		$codi = $_POST["codi"];
+		$sql = "DELETE FROM productes WHERE codi = '$codi'";
+		$result = $conn->query($sql);
+		$borrat = false;
+		if ($result) 
+		{
+			$borrat = true;
+		}
+	}
 ?>
 		<div class="container m-5 mx-auto">
 			<div class="col-8 offset-2">
+				<?php
+					if (!empty($borrat) && $borrat == true) {
+						echo "<div class=\"alert alert-primary\" role=\"alert\">
+								S'ha esborrat el producte
+							</div>"; 
+					}
+					else if(!empty($borrat) && $borrat == false)
+					{
+						echo "<div class=\"alert alert-danger\" role=\"alert\">
+								No s'ha pogut esborrar el producte
+							</div>"; 
+					}
+					
+				?>
 				<table class="table">        
 					<tr> 
 						<th>Producte</th> 
@@ -39,7 +66,7 @@
 											<td class=\"align-middle\">$nom_categoria</td>
 											<td class=\"align-middle\">$preu €</td>
 											<td class=\"align-middle\">
-												<form class=\"form-inline\" action=\"<?php echo htmlspecialchars($_SERVER[PHP_SELF]);?>\" method=\"post\">
+												<form class=\"form-inline\" action=\"$_SERVER[PHP_SELF]\" method=\"post\">
 													<a href=\"form_producte.php?codi=$codi_producte\" class=\"btn btn-primary\"><i class=\"fas fa-pencil-alt\"></i></a>
 													<div class=\"form-group\">
 														<input type=\"hidden\" name=\"codi\" value=\"$codi_producte\" />
