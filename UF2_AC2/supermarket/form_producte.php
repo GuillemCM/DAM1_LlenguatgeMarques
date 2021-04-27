@@ -19,7 +19,15 @@
 			$imatge = $_FILES["imatge"]["name"];
 			$rutaTmp = $_FILES["imatge"]["tmp_name"];
 			$extensio = substr($imatge, strpos($imatge, "."));
-			$novaURL = "images/productes/$codi$extensio";
+			if(!empty($_POST["codi"]) && !empty($extensio))
+			{
+				$novaURL = "images/productes/$codi$extensio";
+			}
+			else
+			{
+				$novaURL = "images/productes/no-image.png";
+			}
+			
 			move_uploaded_file($rutaTmp, "./images/productes/$codi$extensio");
 		}
 		//Insert
@@ -45,6 +53,24 @@
 				<div class="row">
 					<div class="col-4 offset-2">
 						<?php
+							//Consultar el punt 11
+							if (!empty($_GET["codi"])) 
+							{
+								$codi = $_GET["codi"];
+								$sql = "SELECT * FROM productes WHERE codi = '$codi'";
+								$result = $conn->query($sql);
+								if($result)
+								{
+									//Si hi ha producte amb ek codi X
+									$row = $result->fetch_assoc();
+									$nomProd= $row["nom"];
+									$categoria= $row["categoria"];
+									$preu = $row["preu"];
+									$unitatsStock= $row["unitats_stock"];
+									$novaURL= $row["imatge"];
+								}
+							}
+
 							if (isset($error)) 
 							{
 								echo "<div class=\"alert alert-danger\" role=\"alert\">
@@ -176,6 +202,7 @@
 								{
 									echo "<img src=\"images/productes/no-image.png\" class=\"img-thumbnail\" style=\"height: 250px;\" />";
 								}
+								$conn->close();
 							?>
 							
 						</div>
