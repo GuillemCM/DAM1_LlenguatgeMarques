@@ -16,7 +16,6 @@
 				$row = $result->fetch_assoc();
 				$id_usuari = $row["id_client"];
 				//L'usuari existeix, creem variable de sessió
-				session_start();
 				$_SESSION["user"] = $id_usuari;
 				//print_r($_SESSION["user"]);
 				header("Location: comprar.php");
