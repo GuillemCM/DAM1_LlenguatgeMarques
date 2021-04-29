@@ -63,7 +63,7 @@
 								</a>
 								<div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdownMenuLink\">
 									<a class=\"dropdown-item\" href=\"form_client.php\">Modificar les meves dades</a>
-									<a class=\"dropdown-item\" href=\"tancar.php\">Tarcar la sessió</a>
+									<a class=\"dropdown-item\" href=\"tancar.php\">Tancar la sessió</a>
 								</div>
 							</li>
 							<li class=\"nav-item dropdown\">
