@@ -26,6 +26,7 @@
 	}
 	if (!empty($_POST))
 	{
+
 		//Dades post
 		$username = $_POST["username"];
 		$pass = $_POST["pass"];
@@ -52,7 +53,6 @@
 		{
 			$mail = $_POST["mail"];
 		}
-		
 		//Variable es pot fer la query
 		$valid = false;
 
@@ -61,7 +61,7 @@
 			(esEmail($mail) == 1 || $mail == null))
 		{
 			//Si hay sessión UPDATE
-			if (isset($_SESSION)) 
+			if (isset($_SESSION["user"])) 
 			{
 				$sql = "UPDATE clients SET nom_usuari = '$username', contrasenya = '$pass', nom = '$nombre', cognoms = '$apellidos', nif = '$nif', adreca = '$direccion', codi_postal = '$codigo_postal', poblacio = '$poblacion', telefon = '$telefono', email = '$mail' WHERE id_client = '$id_client'";
 				echo $sql;
@@ -72,6 +72,7 @@
 			{
 				$sql = "INSERT INTO clients (nom_usuari, contrasenya, nom, cognoms, nif, adreca, codi_postal, poblacio, telefon, email) 
 					VALUES ('$username', '$pass', '$nombre', '$apellidos', '$nif', '$direccion', '$codigo_postal', '$poblacion', '$telefono', '$mail')";
+					echo $sql;
 				$valid = true;
 			}	
 		}
@@ -287,6 +288,7 @@
 								<input type=\"text\" class=\"form-control\" name=\"mail\" id=\"mail\" />
 								</div>";
 							}
+							$conn->close();
 						?>
 						<div class="form-group text-right">
 							<button type="submit" class="btn btn-default">Enviar</button>
