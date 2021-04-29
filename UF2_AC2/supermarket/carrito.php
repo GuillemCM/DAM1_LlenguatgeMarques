@@ -69,7 +69,7 @@
 						<th colspan="3" scope="row" class="text-right">							
 							Import total
 						</td>
-						<td class="align-middle text-right"><?php echo importTotal();?> €</td>
+						<td class="align-middle text-right"><?php echo importTotal(); $conn->close();?> €</td>
 						<td></td>
 					</tr>
 				</table>
