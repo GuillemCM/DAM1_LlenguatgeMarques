@@ -1,10 +1,11 @@
 <?php
 	require "header.php";
 	require "config.php";
+
+$insertOk = 0;
+
 	if (!empty($_POST))
 	{
-		//Variables POST
-		$codi =  $_POST["codi"];
 		$nomProd =  $_POST["nom"];
 		$categoria = 0;
 		if (!empty($_POST["categoria"])) 
@@ -13,39 +14,43 @@
 		}
 		$preu =  $_POST["preu"];
 		$unitatsStock =  $_POST["stock"];
-		//Imatge
-		if (!empty($_FILES)) 
+
+		//Variables POST
+		if (!empty($_POST["codi"])) 
 		{
-			$imatge = $_FILES["imatge"]["name"];
-			$rutaTmp = $_FILES["imatge"]["tmp_name"];
-			$extensio = substr($imatge, strpos($imatge, "."));
-			if(!empty($_POST["codi"]) && !empty($extensio))
-			{
-				$novaURL = "images/productes/$codi$extensio";
-			}
-			else
-			{
-				$novaURL = "images/productes/no-image.png";
-			}
+			$codi =  $_POST["codi"];
 			
-			move_uploaded_file($rutaTmp, "./images/productes/$codi$extensio");
+			//Imatge
+			if ($_FILES["imatge"]["error"] == 0)
+			{
+				$imatge = $_FILES["imatge"]["name"];
+				$rutaTmp = $_FILES["imatge"]["tmp_name"];
+				$extensio = substr($imatge, strpos($imatge, "."));
+				if(!empty($_POST["codi"]) && !empty($extensio))
+				{
+					$novaURL = "images/productes/$codi$extensio";
+				}
+
+				//Insert
+				$sql = "INSERT INTO productes (codi, categoria, nom, preu, unitats_stock, imatge) 
+					VALUES ('$codi', $categoria, '$nomProd', $preu, $unitatsStock, 'images/productes/$codi$extensio')";
+			
+				//
+				$result = $conn->query($sql);
+				if($result)
+				{
+					//Si hi ha resultat, l'INSERT s'ha fet correctament
+					$insertOk = 1;
+					
+					move_uploaded_file($rutaTmp, "./images/productes/$codi$extensio");
+				}
+			
+			}
 		}
-		//Insert
-		$sql = "INSERT INTO productes (codi, categoria, nom, preu, unitats_stock, imatge) 
-				VALUES ('$codi', $categoria, '$nomProd', $preu, $unitatsStock, 'images/productes/$codi$extensio')";
-		
-		//
-		$result = $conn->query($sql);
-		if($result)
-		{
-			//Si hi ha resultat, l'INSERT s'ha fet correctament
-			$insertOk = 1;
-		}
-		else
-		{
-			//No s'ha fet l'INSERT correctament
-			$error = 1;
-		}
+	}
+	else
+	{
+		$insertOk = -1;
 	}
 ?>
 		<div class="container m-5 mx-auto text-white">
@@ -71,13 +76,13 @@
 								}
 							}
 
-							if (isset($error)) 
+							if ($insertOk == 0) 
 							{
 								echo "<div class=\"alert alert-danger\" role=\"alert\">
 										  Error en afegir el producte
 										</div>";
 							}
-							if (isset($insertOk))
+							elseif($insertOk == 1)
 							{
 								echo "<div class=\"alert alert-primary\" role=\"alert\">
 										  El producte s'ha afegit correctament
@@ -194,7 +199,7 @@
 						</div>
 						<div class="text-center">
 							<?php
-								if (isset($novaURL)) 
+								if (isset($novaURL) && $insertOk == 1) 
 								{
 									echo "<img src=\"$novaURL\" class=\"img-thumbnail\" style=\"height: 250px;\" />";
 								}
